@@ -1,0 +1,78 @@
+# Name:  Emily Leyendecker
+# Class: CS2318-260 Spring 2018
+# HW:	 Assignment 2 Part 1(D)
+# Date:  03/05/2018
+##########################################################################
+# The following MIPS program prompts the user to enter three exam scores,
+# then calculates the average exam score and outputs it
+##########################################################################
+				
+				.data
+enterE1:			.asciiz "Enter Exam 1 score: "
+enterE2:			.asciiz "Enter Exam 2 score: "
+enterE3:			.asciiz "Enter Final Exam score: "
+average:			.asciiz "Your Weighted Average is: "
+
+				.text
+				.globl main
+main: 
+				li $v0, 4
+				la $a0, enterE1
+				syscall
+				
+				li $v0, 5
+				syscall
+				
+				move $t0, $v0
+				
+				li $v0, 4
+				la $a0, enterE2
+				syscall	
+				
+				li $v0, 5
+				syscall
+				
+				move $t1, $v0
+				
+				li $v0, 4
+				la $a0, enterE3
+				syscall
+				
+				li $v0, 5
+				syscall
+				
+				move $t2, $v0
+
+				# E1 multiplied by 410/2048 
+				li $t3, 410
+				mult $t0, $t3
+				mflo $t8
+				sra $t8, $t8, 11
+	
+				
+				# E2 multiplied by 256/853  
+				sll $t9, $t1, 8
+				li $t3, 853
+				div $t9, $t3
+				mflo $t9
+					
+				
+				# E3 divided by 2
+				sra $t2, $t2, 1		
+				
+				add $t9, $t9, $t8
+				add $t9, $t9, $t2
+				
+
+
+				li $v0, 4
+				la $a0, average
+				syscall	
+				
+				li $v0, 1
+				move $a0, $t9
+				syscall																																																										
+				
+				
+				li $v0, 10
+				syscall			
